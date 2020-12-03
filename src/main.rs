@@ -42,7 +42,7 @@ fn find_triplet(numbers : &[i32]) -> i32 {
 }
 
 fn main() {
-    let numbers = read_numbers("input".to_string());
+    let numbers = read_numbers("day1_input".to_string());
 
     println!("Pair:    {}", find_pair(&numbers));
     println!("Triplet: {}", find_triplet(&numbers));
