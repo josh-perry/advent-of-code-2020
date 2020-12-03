@@ -87,15 +87,43 @@ fn day1() {
     println!("Triplet: {}", find_triplet(&numbers));
 }
 
+fn password_validation(password : Password) -> bool {
+    let count : i32 = password.password.matches(password.policy.letter).count() as i32;
+    return count >= password.policy.min && count <= password.policy.max;
+}
+
+fn password_validation_part2(password : Password) -> bool {
+    let first_index : usize = (password.policy.min - 1) as usize;
+    let second_index : usize = (password.policy.max - 1) as usize;
+
+    return (password.password.chars().nth(first_index).unwrap() == password.policy.letter) ^
+           (password.password.chars().nth(second_index).unwrap() == password.policy.letter);
+}
+
 fn day2() {
     let passwords = read_passwords("day2_input".to_string());
     let mut good_passwords = 0;
     let mut bad_passwords = 0;
 
     for password in passwords {
-        let count : i32 = password.password.matches(password.policy.letter).count() as i32;
+        if password_validation(password) {
+            good_passwords += 1;
+            continue;
+        }
 
-        if count >= password.policy.min && count <= password.policy.max {
+        bad_passwords += 1;
+    }
+    
+    println!("Good passwords: {}, Bad passwords: {}", good_passwords, bad_passwords);
+}
+
+fn day2_part2() {
+    let passwords = read_passwords("day2_input".to_string());
+    let mut good_passwords = 0;
+    let mut bad_passwords = 0;
+
+    for password in passwords {
+        if password_validation_part2(password) {
             good_passwords += 1;
             continue;
         }
@@ -107,6 +135,7 @@ fn day2() {
 }
 
 fn main() {
-    //day1();
+    day1();
     day2();
+    day2_part2();
 }
